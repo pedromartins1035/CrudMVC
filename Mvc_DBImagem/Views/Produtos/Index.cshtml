@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Mvc_DBImagem.Models.Produto>
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Produtos</h2>
+<p>
+    @Html.ActionLink("Incluir Novo Produto", "Create", "Produtos", new { @class = "btn btn-success" })
+</p>
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Categoria.CategoriaNome)</th>
+        <th>@Html.DisplayNameFor(model => model.Nome) </th>
+        <th>@Html.DisplayNameFor(model => model.Descricao)</th>
+        <th>@Html.DisplayNameFor(model => model.Estoque) </th>
+        <th>@Html.DisplayNameFor(model => model.Preco)</th>
+        <th>@Html.DisplayNameFor(model => model.Imagem)</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.Categoria.CategoriaNome)</td>
+        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+        <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
+        <td>@Html.DisplayFor(modelItem => item.Estoque)</td>
+        <td>@Html.DisplayFor(modelItem => item.Preco)</td>
+        @if (item.Imagem != null)
+        {
+            <td>
+                @{
+                    var base64 = Convert.ToBase64String(item.Imagem);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                }
+                <img src='@imgSrc' style="max-width:100px; max-height:100px;" />
+            </td>
+        }
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.ProdutoId }) |
+            @Html.ActionLink("Detalhes", "Details", new { id = item.ProdutoId }) |
+            @Html.ActionLink("Deletar", "Delete", new { id = item.ProdutoId })
+        </td>
+    </tr>
+    }
+</table>
+

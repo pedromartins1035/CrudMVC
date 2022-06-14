@@ -1,0 +1,66 @@
+﻿@model Mvc_DBImagem.Models.Produto
+
+@{
+    ViewBag.Title = "Deletar";
+}
+
+<h2>Deletar Produto</h2>
+
+<h3 class="text-danger">Deseja deletar este produto ?</h3>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nome, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Nome,
+                                           new { @class = "form-control", @disabled = "disabled" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Descricao, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Descricao,
+                                           new { @class = "form-control", @disabled = "disabled" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Preco, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Preco,
+                               new { @class = "form-control", @disabled = "disabled" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Categoria.CategoriaNome, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.CategoriaId, ((String)ViewBag.Categoria),
+                               new { @class = "form-control", @disabled = "disabled" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+         @if (Model.Imagem != null)
+         {
+             var base64 = Convert.ToBase64String(Model.Imagem);
+             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            <img src='@imgSrc' style="max-width:100px; max-height:100px;" />
+         }
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Deletar Produto" class="btn btn-danger" />
+                @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-warning" })
+            </div>
+        </div>
+    }
+</div>
